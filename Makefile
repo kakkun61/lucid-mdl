@@ -2,11 +2,11 @@ PWSH = pwsh
 
 .PHONY: build
 build:
-	cabal v2-build
+	cabal v2-build lucid-mdl:lib:lucid-mdl
 
 .PHONY: build-deps
 build-deps:
-	cabal v2-build --only-dependencies
+	cabal v2-build lucid-mdl:lib:lucid-mdl --only-dependencies
 
 .PHONY: test
 test: doctest spec
@@ -22,6 +22,10 @@ spec:
 .PHONY: repl
 repl:
 	cabal v2-repl
+
+.PHONY: example
+example:
+	cabal build lucid-mdl:exe:example
 
 .PHONY: format
 format:

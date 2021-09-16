@@ -3,6 +3,9 @@ cradle:
     - path: "./src"
       component: "lib:lucid-mdl"
 
+    - path: "./example/main.hs"
+      component: "lucid-mdl:exe:example"
+
     - path: "./test/doctest"
       component: "lucid-mdl:test:doctest"
 

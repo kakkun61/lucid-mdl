@@ -42,6 +42,14 @@ library
                -Wpartial-fields
                -Wno-name-shadowing
 
+executable example
+  import: common
+  hs-source-dirs: example
+  main-is: main.hs
+  build-depends: lucid-mdl,
+                 lucid,
+                 text
+
 test-suite doctest
   import: common
   type: exitcode-stdio-1.0
