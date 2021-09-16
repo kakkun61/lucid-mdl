@@ -67,7 +67,7 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   hs-source-dirs: test/spec
-  other-modules: LibSpec
+  other-modules: 
   build-depends: lucid-mdl,
                  hspec
   ghc-options: -threaded
