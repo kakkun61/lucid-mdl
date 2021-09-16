@@ -1,4 +1,4 @@
-# Changelog for haskell-project-template
+# Changelog for lucid-mdl
 
 ## 0.1.0.0
 

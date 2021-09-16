@@ -1,13 +1,13 @@
 cradle:
   cabal:
     - path: "./src"
-      component: "lib:haskell-project-template"
+      component: "lib:lucid-mdl"
 
     - path: "./app/main.hs"
-      component: "haskell-project-template:exe:app"
+      component: "lucid-mdl:exe:app"
 
     - path: "./test/doctest"
-      component: "haskell-project-template:test:doctest"
+      component: "lucid-mdl:test:doctest"
 
     - path: "./test/spec"
-      component: "haskell-project-template:test:spec"
+      component: "lucid-mdl:test:spec"
