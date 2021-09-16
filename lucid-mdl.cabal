@@ -26,8 +26,10 @@ common common
 library
   import: common
   hs-source-dirs: src
-  exposed-modules: Lib
-  build-depends: 
+  exposed-modules: Lucid.Mdl.Base
+                   Lucid.Mdl.Toggle
+  build-depends: lucid,
+                 text
   ghc-options: -Wincomplete-uni-patterns
                -Wincomplete-record-updates
                -Wmonomorphism-restriction
@@ -39,12 +41,6 @@ library
                -Wredundant-constraints
                -Wpartial-fields
                -Wno-name-shadowing
-
-executable app
-  import: common
-  hs-source-dirs: app
-  main-is: main.hs
-  build-depends: lucid-mdl
 
 test-suite doctest
   import: common
