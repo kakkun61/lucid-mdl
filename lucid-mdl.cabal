@@ -27,6 +27,11 @@ library
   import: common
   hs-source-dirs: src
   exposed-modules: Lucid.Mdl.Base
+                   Lucid.Mdl.Button
+                   Lucid.Mdl.Chip
+                   Lucid.Mdl.Head
+                   Lucid.Mdl.Slider
+                   Lucid.Mdl.TextField
                    Lucid.Mdl.Toggle
   build-depends: lucid,
                  text

@@ -8,10 +8,10 @@ module Lucid.Mdl.Toggle
   , switch_
   ) where
 
-import Lucid.Mdl.Base (Ripple, HtmlClass (toHtmlClass))
+import Lucid.Mdl.Base (HtmlClass (toHtmlClass), Ripple)
 
+import           Data.Text (Text)
 import qualified Lucid
-import Data.Text (Text)
 
 -- | Checkbox. <https://getmdl.io/components/index.html#toggles-section/checkbox>
 checkbox_ :: Monad m => Text -> Maybe Ripple -> [Lucid.Attribute] -> [Lucid.Attribute] -> [Lucid.Attribute] -> Lucid.HtmlT m () -> Lucid.HtmlT m ()

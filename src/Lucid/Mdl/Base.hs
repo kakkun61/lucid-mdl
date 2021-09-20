@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lucid.Mdl.Base
@@ -6,16 +6,16 @@ module Lucid.Mdl.Base
   , HtmlClass (..)
   ) where
 
-import Data.Text (Text)
+import Data.Text    (Text)
 import GHC.Generics (Generic)
 
-data Ripple = Ripple deriving (Show, Read, Eq, Ord, Generic)
+data Ripple = Ripple deriving (Show, Read, Eq, Ord, Enum, Generic)
 
 class HtmlClass a where
   toHtmlClass :: a -> Text
 
 instance HtmlClass a => HtmlClass (Maybe a) where
-  toHtmlClass Nothing = ""
+  toHtmlClass Nothing  = ""
   toHtmlClass (Just a) = toHtmlClass a
 
 instance HtmlClass Ripple where
