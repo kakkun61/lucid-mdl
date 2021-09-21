@@ -33,7 +33,8 @@ library
                    Lucid.Mdl.Slider
                    Lucid.Mdl.TextField
                    Lucid.Mdl.Toggle
-  build-depends: lucid,
+  build-depends: data-default-class,
+                 lucid,
                  text
   ghc-options: -Wincomplete-uni-patterns
                -Wincomplete-record-updates
@@ -52,6 +53,7 @@ executable example
   hs-source-dirs: example
   main-is: main.hs
   build-depends: lucid-mdl,
+                 data-default-class,
                  lucid,
                  text
 
