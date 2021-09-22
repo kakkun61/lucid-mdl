@@ -26,6 +26,8 @@ repl:
 .PHONY: example
 example:
 	cabal build lucid-mdl:exe:example
+	$(PWSH) -Command "& { New-Item -Type Directory -ErrorAction SilentlyContinue example\out }"
+	$(PWSH) -Command "& { cabal exec -- example | Out-File example\out\index.html }"
 
 .PHONY: format
 format:
@@ -41,7 +43,8 @@ doc:
 
 .PHONY: clean
 clean:
-	cabal v2-clean
+	-cabal v2-clean
+	-$(PWSH) -Command "& { Remove-Item -Recurse example\out }"
 
 .PHONY: targets
 targets:

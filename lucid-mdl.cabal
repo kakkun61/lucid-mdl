@@ -28,6 +28,7 @@ library
   hs-source-dirs: src
   exposed-modules: Lucid.Mdl.Base
                    Lucid.Mdl.Button
+                   Lucid.Mdl.Card
                    Lucid.Mdl.Chip
                    Lucid.Mdl.Head
                    Lucid.Mdl.Slider
