@@ -11,7 +11,7 @@ import qualified Lucid
 
 slider_ :: Applicative m => Config -> Lucid.HtmlT m ()
 slider_ (Config attributes) =
-  Lucid.input_ ([Lucid.classes_ ["mdl-slider", "mdl-js-slider"], Lucid.type_ "range"] ++ attributes)
+  Lucid.input_ ([Lucid.classes_ [" mdl-slider ", " mdl-js-slider "], Lucid.type_ "range"] ++ attributes)
 
 newtype Config =
   Config

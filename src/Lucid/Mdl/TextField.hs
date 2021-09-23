@@ -29,12 +29,12 @@ textArea_ config id' label input = component (flip Lucid.textarea_ input) config
 
 component :: Monad m => ([Lucid.Attribute] -> Lucid.HtmlT m ()) -> Config m -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 component input (Config floatingLabel textFieldAttributes inputAttributes labelAttributes error) id' label =
-  Lucid.div_ (Lucid.classes_ (["mdl-textfield", "mdl-js-textfield"] ++ [toHtmlClass floatingLabel]) : textFieldAttributes) $ do
-    input $ [Lucid.class_ "mdl-textfield__input", Lucid.type_ "text", Lucid.id_ id'] ++ maybeToList (Lucid.pattern_ . pattern <$> error) ++ inputAttributes
-    Lucid.label_ ([Lucid.class_ "mdl-textfield__label", Lucid.for_ id'] ++ labelAttributes) label
+  Lucid.div_ (Lucid.classes_ ([" mdl-textfield ", " mdl-js-textfield "] ++ [toHtmlClass floatingLabel]) : textFieldAttributes) $ do
+    input $ [Lucid.class_ " mdl-textfield__input ", Lucid.type_ "text", Lucid.id_ id'] ++ maybeToList (Lucid.pattern_ . pattern <$> error) ++ inputAttributes
+    Lucid.label_ ([Lucid.class_ " mdl-textfield__label ", Lucid.for_ id'] ++ labelAttributes) label
     case error of
       Just ErrorConfig { error, attributes } ->
-        Lucid.span_ (Lucid.class_ "mdl-textfield__error" : attributes) error
+        Lucid.span_ (Lucid.class_ " mdl-textfield__error " : attributes) error
       Nothing -> pure ()
 
 data Config m =
@@ -55,7 +55,7 @@ instance Default (Config m) where
 data FloatingLabel = FloatingLabel deriving (Show, Read, Eq, Ord, Enum, Bounded, Generic)
 
 instance HtmlClass FloatingLabel where
-  toHtmlClass _ = "mdl-textfield--floating-label"
+  toHtmlClass _ = " mdl-textfield--floating-label "
 
 data ErrorConfig m =
   ErrorConfig

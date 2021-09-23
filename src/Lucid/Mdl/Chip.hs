@@ -21,12 +21,12 @@ import qualified Lucid
 
 chip_ :: Monad m => ChipConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 chip_ (ChipConfig chipAttributes textAttributes deletable) text =
-  Lucid.span_ (Lucid.classes_ ("mdl-chip" : ["mdl-chip--deletable" | isJust deletable]) : chipAttributes) $ do
-    Lucid.span_ (Lucid.class_ "mdl-chip__text" : textAttributes) text
+  Lucid.span_ (Lucid.classes_ (" mdl-chip " : [" mdl-chip--deletable " | isJust deletable]) : chipAttributes) $ do
+    Lucid.span_ (Lucid.class_ " mdl-chip__text " : textAttributes) text
     case deletable of
       Just (DeletableConfig actionAttributes iconAttributes) ->
-        Lucid.button_ ([Lucid.type_ "button", Lucid.class_ "mdl-chip__action"] ++ actionAttributes) $
-          Lucid.i_ (Lucid.class_ "material-icons" : iconAttributes) "cancel"
+        Lucid.button_ ([Lucid.type_ "button", Lucid.class_ " mdl-chip__action "] ++ actionAttributes) $
+          Lucid.i_ (Lucid.class_ " material-icons " : iconAttributes) "cancel"
       Nothing -> pure ()
 
 data ChipConfig =
@@ -42,8 +42,8 @@ instance Default ChipConfig where
 
 button_ :: Applicative m => ButtonConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 button_ (ButtonConfig chipAttributes textAttributes) text =
-  Lucid.button_ ([Lucid.type_ "button", Lucid.class_ "mdl-chip"] ++ chipAttributes) $ do
-    Lucid.span_ (Lucid.class_ "mdl-chip__text" : textAttributes) text
+  Lucid.button_ ([Lucid.type_ "button", Lucid.class_ " mdl-chip "] ++ chipAttributes) $ do
+    Lucid.span_ (Lucid.class_ " mdl-chip__text " : textAttributes) text
 
 data ButtonConfig =
   ButtonConfig
@@ -63,13 +63,13 @@ imageContact_ config image = contact_ config $ Lucid.img_ [Lucid.src_ image]
 
 contact_ :: Monad m => ContactConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 contact_ (ContactConfig contactAttributes chipAttributes textAttributes deletable) contact text =
-  Lucid.span_ (Lucid.classes_ (["mdl-chip", "mdl-chip--contact"] ++ ["mdl-chip--deletable" | isJust deletable]) : chipAttributes) $ do
-    Lucid.with contact (Lucid.class_ " mdl-chip__contact" : contactAttributes) -- this space is necessary
-    Lucid.span_ (Lucid.class_ "mdl-chip__text" : textAttributes) text
+  Lucid.span_ (Lucid.classes_ ([" mdl-chip ", " mdl-chip--contact "] ++ [" mdl-chip--deletable " | isJust deletable]) : chipAttributes) $ do
+    Lucid.with contact (Lucid.class_ " mdl-chip__contact " : contactAttributes)
+    Lucid.span_ (Lucid.class_ " mdl-chip__text " : textAttributes) text
     case deletable of
       Just (DeletableConfig actionAttributes iconAttributes) ->
-        Lucid.a_ (Lucid.class_ "mdl-chip__action" : actionAttributes) $
-          Lucid.i_ (Lucid.class_ "material-icons" : iconAttributes) "cancel"
+        Lucid.a_ (Lucid.class_ " mdl-chip__action " : actionAttributes) $
+          Lucid.i_ (Lucid.class_ "material-icons " : iconAttributes) "cancel"
       Nothing -> pure ()
 
 data ContactConfig =

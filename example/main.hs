@@ -13,6 +13,7 @@ import qualified Lucid.Mdl.Toggle    as Toggle
 import           Data.Default.Class (Default (def))
 import qualified Data.Text.Lazy.IO  as T
 import qualified Lucid              as L
+import Data.String (IsString)
 
 main :: IO ()
 main = T.putStrLn $ L.renderText html
@@ -33,26 +34,26 @@ html =
       L.div_ $ do
         Button.button_ def "Button"
         space
-        Button.button_ def { Button.style = Just Button.Raised, Button.color = Just Button.Colored, Button.ripple = Just Base.Ripple } "Button"
+        Button.button_ def { Button.style = Just Button.Raised, Button.color = Just Button.Colored, Button.ripple = Base.Ripple True } "Button"
 
       L.h3_ "Checkbox"
       L.div_ $ do
-        Toggle.checkbox_ def { Toggle.ripple = Just Base.Ripple, Toggle.attributes = [L.style_ "display: block;"] } "checkbox1" "Checkbox 1"
-        Toggle.checkbox_ def { Toggle.ripple = Just Base.Ripple, Toggle.attributes = [L.style_ "display: block;"] } "checkbox2" "Checkbox 2"
+        Toggle.checkbox_ def { Toggle.ripple = Base.Ripple True, Toggle.attributes = [L.style_ "display: block;"] } "checkbox1" "Checkbox 1"
+        Toggle.checkbox_ def { Toggle.ripple = Base.Ripple True, Toggle.attributes = [L.style_ "display: block;"] } "checkbox2" "Checkbox 2"
 
       L.h3_ "Radio button"
       L.div_ $ do
-        Toggle.radio_ def { Toggle.ripple = Just Base.Ripple, Toggle.attributes = [L.style_ "display: block;"], Toggle.inputAttributes = [L.checked_] } "radio1" "radio-group" "Radio button 1"
-        Toggle.radio_ def { Toggle.ripple = Just Base.Ripple, Toggle.attributes = [L.style_ "display: block;"] } "radio2" "radio-group" "Radio button 2"
+        Toggle.radio_ def { Toggle.ripple = Base.Ripple True, Toggle.attributes = [L.style_ "display: block;"], Toggle.inputAttributes = [L.checked_] } "radio1" "radio-group" "Radio button 1"
+        Toggle.radio_ def { Toggle.ripple = Base.Ripple True, Toggle.attributes = [L.style_ "display: block;"] } "radio2" "radio-group" "Radio button 2"
 
       L.h3_ "Icon toggle"
       L.div_ $ do
-        Toggle.iconToggle_ def { Toggle.ripple = Just Base.Ripple } "thumb-up" "thumb_up"
-        Toggle.iconToggle_ def { Toggle.ripple = Just Base.Ripple } "thumb-down" "thumb_down"
+        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-up" "thumb_up"
+        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-down" "thumb_down"
 
       L.h3_ "Switch"
       L.div_ $ do
-        Toggle.switch_ def { Toggle.ripple = Just Base.Ripple } "switch1" ""
+        Toggle.switch_ def { Toggle.ripple = Base.Ripple True } "switch1" ""
 
       L.h3_ "Slider"
       L.div_ $ do
@@ -81,7 +82,17 @@ html =
 
       L.h3_ "Card"
       L.div_ $ do
-        Card.card_ def { Card.cardAttributes = [L.class_ "mdl-shadow--2dp"] } (L.h4_ "Card")
+        Card.card_ def { Card.attributes = [L.class_ "mdl-shadow--2dp"] } $ do
+          Card.title_ def $ L.h4_ "Card"
+          Card.supportingText_ def loremIpsum
+          Card.actions_ def { Card.border = Card.Border True } $ Button.button_ def "Button"
+          Card.menu_ def $ Button.button_ def { Button.style = Just Button.Icon } $ L.i_ [L.class_ "material-icons"] "share"
 
 space :: L.Html ()
 space = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""
+
+loremIpsum :: IsString a => a
+loremIpsum =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation \
+  \ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint \
+  \occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."

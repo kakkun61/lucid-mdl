@@ -7,16 +7,19 @@ module Lucid.Mdl.Base
   ( Ripple (..)
   , Color (..)
   , TextColor (..)
+  , spacer_
   , HtmlClass (..)
   ) where
 
 import Data.Text    (Text)
 import GHC.Generics (Generic)
+import qualified Lucid
 
-data Ripple = Ripple deriving (Show, Read, Eq, Ord, Enum, Generic)
+newtype Ripple = Ripple Bool deriving (Show, Read, Eq, Ord, Enum, Generic)
 
 instance HtmlClass Ripple where
-  toHtmlClass _ = "mdl-js-ripple-effect"
+  toHtmlClass (Ripple True) = " mdl-js-ripple-effect "
+  toHtmlClass (Ripple False) = ""
 
 data Color
   = Red100
@@ -508,15 +511,18 @@ colorToText AccentColor          = "accent"
 colorToText AccentContrastColor  = "accent-contrast"
 
 instance HtmlClass Color where
-  toHtmlClass c = "mdl-color--" <> colorToText c
+  toHtmlClass c = " mdl-color--" <> colorToText c <> " "
 
 newtype TextColor =
   TextColor Color
   deriving stock (Show, Read, Eq, Ord, Generic)
   deriving newtype Enum
 
+spacer_ :: Applicative m => Lucid.HtmlT m ()
+spacer_ = Lucid.div_ [Lucid.class_ "mdl-layout-spacer"] mempty
+
 instance HtmlClass TextColor where
-  toHtmlClass (TextColor c) = "mdl-color-text--" <> colorToText c
+  toHtmlClass (TextColor c) = " mdl-color-text--" <> colorToText c <> " "
 
 class HtmlClass a where
   toHtmlClass :: a -> Text
