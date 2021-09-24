@@ -3,7 +3,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
-module Lucid.Mdl.Base
+module Lucid.MaterialDesign.Lite.Base
   ( Ripple (..)
   , Color (..)
   , TextColor (..)

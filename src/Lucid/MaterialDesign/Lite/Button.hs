@@ -1,14 +1,14 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lucid.Mdl.Button
+module Lucid.MaterialDesign.Lite.Button
   ( button_
   , Config (..)
   , Style (..)
   , Color (..)
   ) where
 
-import Lucid.Mdl.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
 
 import           Data.Default.Class (Default (def))
 import           Data.Maybe         (fromMaybe)
@@ -16,9 +16,6 @@ import           GHC.Generics       (Generic)
 import qualified Lucid
 
 data Style = Raised | Fab | MiniFab | Icon deriving (Show, Read, Eq, Ord, Enum, Generic)
-
--- TODO icon について考える
--- material icon 非依存とか
 
 instance HtmlClass Style where
   toHtmlClass Raised  = " mdl-button--raised "

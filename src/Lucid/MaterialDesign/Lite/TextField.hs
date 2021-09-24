@@ -5,7 +5,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE StandaloneDeriving    #-}
 
-module Lucid.Mdl.TextField
+module Lucid.MaterialDesign.Lite.TextField
   ( textField_
   , textArea_
   , Config (..)
@@ -19,7 +19,7 @@ import           Data.Maybe            (maybeToList)
 import           Data.Text             (Text)
 import           GHC.Generics          (Generic)
 import qualified Lucid
-import           Lucid.Mdl.Base        (HtmlClass (toHtmlClass))
+import           Lucid.MaterialDesign.Lite.Base        (HtmlClass (toHtmlClass))
 
 textField_ :: Monad m => Config m -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 textField_ = component Lucid.input_

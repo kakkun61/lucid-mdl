@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lucid.Mdl.Slider
+module Lucid.MaterialDesign.Lite.Slider
   ( slider_
   , Config (..)
   ) where

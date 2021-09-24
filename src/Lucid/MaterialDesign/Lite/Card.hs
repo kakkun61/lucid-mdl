@@ -2,9 +2,11 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Lucid.Mdl.Card
+module Lucid.MaterialDesign.Lite.Card
   ( card_
   , title_
+  , titleText_
+  , subtitleText_
   , supportingText_
   , actions_
   , menu_
@@ -15,15 +17,21 @@ module Lucid.Mdl.Card
 
 import qualified Lucid
 import GHC.Generics (Generic)
-import Lucid.Mdl.Base (HtmlClass(toHtmlClass))
+import Lucid.MaterialDesign.Lite.Base (HtmlClass(toHtmlClass))
 import Data.Default.Class (Default (def))
 import Data.Text (Text)
 
 card_ :: Applicative m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 card_ (Config attributes) = Lucid.div_ (Lucid.class_ " mdl-card " : attributes)
 
-title_ :: Applicative m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
-title_ config = inner " mdl-card__title " config . flip Lucid.with [Lucid.class_ " mdl-card__title-text "]
+title_ :: Monad m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+title_ = inner " mdl-card__title "
+
+titleText_ :: Applicative m => Lucid.HtmlT m () -> Lucid.HtmlT m ()
+titleText_ = flip Lucid.with [Lucid.class_ " mdl-card__title-text "]
+
+subtitleText_ :: Applicative m => Lucid.HtmlT m () -> Lucid.HtmlT m ()
+subtitleText_ = flip Lucid.with [Lucid.class_ " mdl-card__subtitle-text "]
 
 supportingText_ :: Applicative m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 supportingText_ = inner " mdl-card__supporting-text "

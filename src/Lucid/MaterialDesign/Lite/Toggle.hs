@@ -1,16 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Toggles. <https://getmdl.io/components/index.html#toggles-section>
-module Lucid.Mdl.Toggle
+module Lucid.MaterialDesign.Lite.Toggle
   ( checkbox_
   , radio_
   , iconToggle_
   , switch_
   , Config (..)
+  , IconToggleConfig (..)
   ) where
 
-import Lucid.Mdl.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
 
 import           Data.Text (Text)
 import qualified Lucid
@@ -32,11 +34,11 @@ radio_ (Config ripple radioAttributes inputAttributes labelAttributes) id' name 
     Lucid.span_ (Lucid.class_ " mdl-radio__label " : labelAttributes) label
 
 -- | Icon toggle. <https://getmdl.io/components/index.html#toggles-section/icon-toggle>
-iconToggle_ :: Monad m => Config -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
-iconToggle_ (Config ripple iconToggleAttributes inputAttributes labelAttributes) id' label =
+iconToggle_ :: Monad m => IconToggleConfig -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+iconToggle_ (IconToggleConfig ripple iconToggleAttributes inputAttributes) id' icon =
   Lucid.label_ ([Lucid.classes_ [" mdl-icon-toggle ", " mdl-js-icon-toggle ", toHtmlClass ripple], Lucid.for_ id'] ++ iconToggleAttributes) $ do
     Lucid.input_ ([Lucid.type_ "checkbox", Lucid.id_ id', Lucid.class_ " mdl-icon-toggle__input "] ++ inputAttributes)
-    Lucid.i_ (Lucid.classes_ [" mdl-icon-toggle__label ", " material-icons "] : labelAttributes) label
+    Lucid.with icon [Lucid.class_ " mdl-icon-toggle__label "]
 
 -- | Switch. <https://getmdl.io/components/index.html#toggles-section/switch>
 switch_ :: Monad m => Config -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
@@ -56,3 +58,14 @@ data Config =
 
 instance Default Config where
   def = Config (Ripple False) [] [] []
+
+data IconToggleConfig =
+  IconToggleConfig
+    { ripple :: Ripple
+    , attributes :: [Lucid.Attribute]
+    , inputAttributes :: [Lucid.Attribute]
+    }
+  deriving (Show , Eq, Generic)
+
+instance Default IconToggleConfig where
+  def = IconToggleConfig (Ripple False) [] []

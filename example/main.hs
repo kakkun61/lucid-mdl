@@ -1,14 +1,15 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
-import qualified Lucid.Mdl.Base      as Base
-import qualified Lucid.Mdl.Button    as Button
-import qualified Lucid.Mdl.Chip      as Chip
-import qualified Lucid.Mdl.Card as Card
-import qualified Lucid.Mdl.Head      as Head
-import qualified Lucid.Mdl.Slider    as Slider
-import qualified Lucid.Mdl.TextField as TextField
-import qualified Lucid.Mdl.Toggle    as Toggle
+import qualified Lucid.MaterialDesign.Lite.Base      as Base
+import qualified Lucid.MaterialDesign.Lite.Button    as Button
+import qualified Lucid.MaterialDesign.Lite.Chip      as Chip
+import qualified Lucid.MaterialDesign.Lite.Card as Card
+import qualified Lucid.MaterialDesign.Lite.Head      as Head
+import qualified Lucid.MaterialDesign.Lite.Slider    as Slider
+import qualified Lucid.MaterialDesign.Lite.TextField as TextField
+import qualified Lucid.MaterialDesign.Lite.Toggle    as Toggle
+import qualified Lucid.MaterialDesign.Icon as Icon
 
 import           Data.Default.Class (Default (def))
 import qualified Data.Text.Lazy.IO  as T
@@ -24,11 +25,10 @@ html =
     L.head_ $ do
       Head.script_
       Head.css_ Head.Pink Head.Indigo
-      Head.font_
+      Icon.head_
       L.style_ "body { padding: 20px; box-sizing: border-box; }"
     L.body_ $ do
       L.h1_ "lucid-mdl"
-      L.h2_ "Lucid.Mdl.Toggle"
 
       L.h3_ "Button"
       L.div_ $ do
@@ -48,8 +48,8 @@ html =
 
       L.h3_ "Icon toggle"
       L.div_ $ do
-        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-up" "thumb_up"
-        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-down" "thumb_down"
+        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-up" $ Icon.icon_ "thumb_up"
+        Toggle.iconToggle_ def { Toggle.ripple = Base.Ripple True } "thumb-down" $ Icon.icon_ "thumb_down"
 
       L.h3_ "Switch"
       L.div_ $ do
@@ -83,10 +83,12 @@ html =
       L.h3_ "Card"
       L.div_ $ do
         Card.card_ def { Card.attributes = [L.class_ "mdl-shadow--2dp"] } $ do
-          Card.title_ def $ L.h4_ "Card"
+          Card.title_ def $ do
+            Card.titleText_ $ L.h4_ "Card"
+            Card.subtitleText_ $ L.h5_ "Material"
           Card.supportingText_ def loremIpsum
-          Card.actions_ def { Card.border = Card.Border True } $ Button.button_ def "Button"
-          Card.menu_ def $ Button.button_ def { Button.style = Just Button.Icon } $ L.i_ [L.class_ "material-icons"] "share"
+          Card.actions_ def { Card.border = Card.Border True } $ Button.button_ def { Button.color = Just Button.Colored } "Button"
+          Card.menu_ def $ Button.button_ def { Button.style = Just Button.Icon } $ Icon.icon_ "share"
 
 space :: L.Html ()
 space = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""

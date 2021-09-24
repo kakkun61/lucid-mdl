@@ -26,14 +26,15 @@ common common
 library
   import: common
   hs-source-dirs: src
-  exposed-modules: Lucid.Mdl.Base
-                   Lucid.Mdl.Button
-                   Lucid.Mdl.Card
-                   Lucid.Mdl.Chip
-                   Lucid.Mdl.Head
-                   Lucid.Mdl.Slider
-                   Lucid.Mdl.TextField
-                   Lucid.Mdl.Toggle
+  exposed-modules: Lucid.MaterialDesign.Lite.Base
+                   Lucid.MaterialDesign.Lite.Button
+                   Lucid.MaterialDesign.Lite.Card
+                   Lucid.MaterialDesign.Lite.Chip
+                   Lucid.MaterialDesign.Lite.Head
+                   Lucid.MaterialDesign.Lite.Slider
+                   Lucid.MaterialDesign.Lite.TextField
+                   Lucid.MaterialDesign.Lite.Toggle
+                   Lucid.MaterialDesign.Icon
   build-depends: data-default-class,
                  lucid,
                  text
