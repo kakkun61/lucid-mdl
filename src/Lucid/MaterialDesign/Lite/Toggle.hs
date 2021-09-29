@@ -1,6 +1,6 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE OverloadedStrings     #-}
 
 -- | Toggles. <https://getmdl.io/components/index.html#toggles-section>
 module Lucid.MaterialDesign.Lite.Toggle
@@ -12,15 +12,19 @@ module Lucid.MaterialDesign.Lite.Toggle
   , IconToggleConfig (..)
   ) where
 
-import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple)
 
-import           Data.Text (Text)
+import           Data.Default.Class (Default (def))
+import           Data.Text          (Text)
+import           GHC.Generics       (Generic)
 import qualified Lucid
-import GHC.Generics (Generic)
-import Data.Default.Class (Default (def))
 
 -- | Checkbox. <https://getmdl.io/components/index.html#toggles-section/checkbox>
-checkbox_ :: Monad m => Config -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+checkbox_
+  :: Monad m
+  => Config
+  -> Text -- ^ Id.
+  -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 checkbox_ (Config ripple checkboxAttributes inputAttributes labelAttributes) id' label =
   Lucid.label_ ([Lucid.classes_ [" mdl-checkbox ", " mdl-js-checkbox ", toHtmlClass ripple], Lucid.for_ id'] ++ checkboxAttributes) $ do
     Lucid.input_ ([Lucid.type_ "checkbox", Lucid.id_ id', Lucid.class_ " mdl-checkbox__input "] ++ inputAttributes)
@@ -49,23 +53,23 @@ switch_ (Config ripple switchAttributes inputAttributes labelAttributes) id' lab
 
 data Config =
   Config
-    { ripple :: Ripple
-    , attributes :: [Lucid.Attribute]
+    { ripple          :: Ripple
+    , attributes      :: [Lucid.Attribute]
     , inputAttributes :: [Lucid.Attribute]
     , labelAttributes :: [Lucid.Attribute]
     }
   deriving (Show, Eq, Generic)
 
 instance Default Config where
-  def = Config (Ripple False) [] [] []
+  def = Config def [] [] []
 
 data IconToggleConfig =
   IconToggleConfig
-    { ripple :: Ripple
-    , attributes :: [Lucid.Attribute]
+    { ripple          :: Ripple
+    , attributes      :: [Lucid.Attribute]
     , inputAttributes :: [Lucid.Attribute]
     }
   deriving (Show , Eq, Generic)
 
 instance Default IconToggleConfig where
-  def = IconToggleConfig (Ripple False) [] []
+  def = IconToggleConfig def [] []

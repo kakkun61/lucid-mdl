@@ -1,6 +1,6 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings     #-}
 
 module Lucid.MaterialDesign.Lite.Card
   ( card_
@@ -15,30 +15,37 @@ module Lucid.MaterialDesign.Lite.Card
   , Border (..)
   ) where
 
+import           Data.Default.Class             (Default (def))
+import           Data.Text                      (Text)
+import           GHC.Generics                   (Generic)
 import qualified Lucid
-import GHC.Generics (Generic)
-import Lucid.MaterialDesign.Lite.Base (HtmlClass(toHtmlClass))
-import Data.Default.Class (Default (def))
-import Data.Text (Text)
+import           Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
 
+-- | A root container.
 card_ :: Applicative m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 card_ (Config attributes) = Lucid.div_ (Lucid.class_ " mdl-card " : attributes)
 
+-- | A title container, which must be a child of 'card_', which must have 'titleText_' as this child and which may have 'subtitleText_' as this child.
 title_ :: Monad m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 title_ = inner " mdl-card__title "
 
+-- | A title text container, which must be a child of 'title_'.
 titleText_ :: Applicative m => Lucid.HtmlT m () -> Lucid.HtmlT m ()
 titleText_ = flip Lucid.with [Lucid.class_ " mdl-card__title-text "]
 
+-- | A subtitle text container, which must be a child of 'title_'.
 subtitleText_ :: Applicative m => Lucid.HtmlT m () -> Lucid.HtmlT m ()
 subtitleText_ = flip Lucid.with [Lucid.class_ " mdl-card__subtitle-text "]
 
+-- | A supporting text container, which must be a child of 'card_'.
 supportingText_ :: Applicative m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 supportingText_ = inner " mdl-card__supporting-text "
 
+-- | A actions container, which must be a child of 'card_'.
 actions_ :: Applicative m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 actions_ = inner " mdl-card__actions "
 
+-- | A menu container, which must be a child of 'card_'.
 menu_ :: Applicative m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 menu_ = inner " mdl-card__menu "
 
@@ -52,21 +59,34 @@ newtype Config =
     }
   deriving (Show, Eq)
 
+
+-- |
+-- >>> def :: Config
+-- Config {attributes = []}
 instance Default Config where
   def = Config []
 
 data InnerConfig =
   InnerConfig
     { attributes :: [Lucid.Attribute]
-    , border :: Border
+    , border     :: Border
     }
   deriving (Show, Eq)
 
+-- |
+-- >>> def :: InnerConfig
+-- InnerConfig {attributes = [], border = Border False}
 instance Default InnerConfig where
   def = InnerConfig [] (Border False)
 
 newtype Border = Border Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
 
+-- |
+-- >>> def :: Border
+-- Border False
+instance Default Border where
+  def = Border False
+
 instance HtmlClass Border where
-  toHtmlClass (Border True) = " mdl-card--border "
+  toHtmlClass (Border True)  = " mdl-card--border "
   toHtmlClass (Border False) = ""

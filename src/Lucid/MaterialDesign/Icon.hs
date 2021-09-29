@@ -5,8 +5,8 @@ module Lucid.MaterialDesign.Icon
   , icon_
   ) where
 
+import           Data.Text (Text)
 import qualified Lucid
-import Data.Text (Text)
 
 head_ :: Applicative m => Lucid.HtmlT m ()
 head_ = Lucid.link_ [Lucid.rel_ "stylesheet", Lucid.href_ "https://fonts.googleapis.com/icon?family=Material+Icons"]

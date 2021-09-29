@@ -54,7 +54,12 @@ colorToUrl Brown      = "brown"
 colorToUrl BlueGrey   = "blue_grey"
 colorToUrl Grey       = "grey"
 
-css_ :: Monad m => Color -> Color -> Lucid.HtmlT m ()
+-- | Link a CSS.
+css_
+  :: Monad m
+  => Color -- ^ Primary color.
+  -> Color -- ^ Accent color.
+  -> Lucid.HtmlT m ()
 css_ primaryColor accentColor = do
   Lucid.link_
     [ Lucid.rel_ "stylesheet"
@@ -70,5 +75,6 @@ css_ primaryColor accentColor = do
     \  align-self: flex-start;\
     \}"
 
+-- | Link a JavaScript.
 script_ :: Monad m => Lucid.HtmlT m ()
 script_ = Lucid.script_ [Lucid.defer_ "", Lucid.src_ "https://code.getmdl.io/1.3.0/material.min.js"] ("" :: Lucid.Html ())

@@ -19,5 +19,8 @@ newtype Config =
     }
   deriving (Show, Eq, Generic)
 
+-- |
+-- >>> def :: Config
+-- Config {attributes = []}
 instance Default Config where
   def = Config []

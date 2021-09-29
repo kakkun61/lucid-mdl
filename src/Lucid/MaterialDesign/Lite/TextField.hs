@@ -13,18 +13,29 @@ module Lucid.MaterialDesign.Lite.TextField
   , ErrorConfig (..)
   ) where
 
-import           Data.Default.Class    (Default (def))
-import           Data.Functor.Identity (Identity)
-import           Data.Maybe            (maybeToList)
-import           Data.Text             (Text)
-import           GHC.Generics          (Generic)
+import           Data.Default.Class             (Default (def))
+import           Data.Functor.Identity          (Identity)
+import           Data.Maybe                     (maybeToList)
+import           Data.Text                      (Text)
+import           GHC.Generics                   (Generic)
 import qualified Lucid
-import           Lucid.MaterialDesign.Lite.Base        (HtmlClass (toHtmlClass))
+import           Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
 
-textField_ :: Monad m => Config m -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+textField_
+  :: Monad m
+  => Config m
+  -> Text -- ^ Id.
+  -> Lucid.HtmlT m () -- ^ Label.
+  -> Lucid.HtmlT m ()
 textField_ = component Lucid.input_
 
-textArea_ :: Monad m => Config m -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+textArea_
+  :: Monad m
+  => Config m
+  -> Text -- ^ Id.
+  -> Lucid.HtmlT m () -- ^ Label.
+  -> Lucid.HtmlT m () -- ^ Input.
+  -> Lucid.HtmlT m ()
 textArea_ config id' label input = component (flip Lucid.textarea_ input) config id' label
 
 component :: Monad m => ([Lucid.Attribute] -> Lucid.HtmlT m ()) -> Config m -> Text -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
@@ -39,7 +50,7 @@ component input (Config floatingLabel textFieldAttributes inputAttributes labelA
 
 data Config m =
   Config
-    { floatingLabel       :: Maybe FloatingLabel
+    { floatingLabel       :: FloatingLabel
     , textFieldAttributes :: [Lucid.Attribute]
     , inputAttributes     :: [Lucid.Attribute]
     , labelAttributes     :: [Lucid.Attribute]
@@ -49,13 +60,23 @@ data Config m =
 
 deriving instance Show (Config Identity)
 
+-- |
+-- >>> def :: Config Identity
+-- Config {floatingLabel = FloatingLabel False, textFieldAttributes = [], inputAttributes = [], labelAttributes = [], error = Nothing}
 instance Default (Config m) where
-  def = Config Nothing [] [] [] Nothing
+  def = Config def [] [] [] Nothing
 
-data FloatingLabel = FloatingLabel deriving (Show, Read, Eq, Ord, Enum, Bounded, Generic)
+newtype FloatingLabel = FloatingLabel Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
+
+-- |
+-- >>> def :: FloatingLabel
+-- FloatingLabel False
+instance Default FloatingLabel where
+  def = FloatingLabel False
 
 instance HtmlClass FloatingLabel where
-  toHtmlClass _ = " mdl-textfield--floating-label "
+  toHtmlClass (FloatingLabel True)  = " mdl-textfield--floating-label "
+  toHtmlClass (FloatingLabel False) = ""
 
 data ErrorConfig m =
   ErrorConfig

@@ -1,20 +1,20 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
+import qualified Lucid.MaterialDesign.Icon           as Icon
 import qualified Lucid.MaterialDesign.Lite.Base      as Base
 import qualified Lucid.MaterialDesign.Lite.Button    as Button
+import qualified Lucid.MaterialDesign.Lite.Card      as Card
 import qualified Lucid.MaterialDesign.Lite.Chip      as Chip
-import qualified Lucid.MaterialDesign.Lite.Card as Card
 import qualified Lucid.MaterialDesign.Lite.Head      as Head
 import qualified Lucid.MaterialDesign.Lite.Slider    as Slider
 import qualified Lucid.MaterialDesign.Lite.TextField as TextField
 import qualified Lucid.MaterialDesign.Lite.Toggle    as Toggle
-import qualified Lucid.MaterialDesign.Icon as Icon
 
 import           Data.Default.Class (Default (def))
+import           Data.String        (IsString)
 import qualified Data.Text.Lazy.IO  as T
 import qualified Lucid              as L
-import Data.String (IsString)
 
 main :: IO ()
 main = T.putStrLn $ L.renderText html
@@ -77,7 +77,7 @@ html =
         L.form_ $ do
           L.div_ $ TextField.textField_ def "text-field-1" "Text field"
           L.div_ $ TextField.textField_ def { TextField.error = Just (TextField.ErrorConfig "-?[0-9]*(\\.[0-9]+)?" [] "Input must be a number") } "text-field-2" "Text field"
-          L.div_ $ TextField.textField_ def { TextField.floatingLabel = Just TextField.FloatingLabel } "text-field-3" "Text field"
+          L.div_ $ TextField.textField_ def { TextField.floatingLabel = TextField.FloatingLabel True } "text-field-3" "Text field"
           L.div_ $ TextField.textArea_ def "text-area-1" "Text area" ""
 
       L.h3_ "Card"

@@ -1,8 +1,8 @@
 {-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE StandaloneDeriving    #-}
 
 module Lucid.MaterialDesign.Lite.Chip
   ( chip_
@@ -17,12 +17,12 @@ module Lucid.MaterialDesign.Lite.Chip
 
 import qualified Lucid.MaterialDesign.Icon as Icon
 
-import           Data.Default.Class (Default (def))
-import           Data.Maybe         (isJust)
-import           Data.Text          (Text)
-import           GHC.Generics       (Generic)
+import           Data.Default.Class    (Default (def))
+import           Data.Functor.Identity (Identity)
+import           Data.Maybe            (isJust)
+import           Data.Text             (Text)
+import           GHC.Generics          (Generic)
 import qualified Lucid
-import Data.Functor.Identity (Identity)
 
 chip_ :: Monad m => ChipConfig m -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 chip_ (ChipConfig chipAttributes textAttributes deletable) text =
@@ -43,6 +43,9 @@ data ChipConfig m =
 
 deriving instance Show (ChipConfig Identity)
 
+-- |
+-- >>> def :: ChipConfig Identity
+-- ChipConfig {chipAttributes = [], textAttributes = [], deletable = Nothing}
 instance Default (ChipConfig m) where
   def = ChipConfig [] [] Nothing
 
@@ -58,6 +61,9 @@ data ButtonConfig =
     }
   deriving (Show, Eq, Generic)
 
+-- |
+-- >>> def :: ButtonConfig
+-- ButtonConfig {chipAttributes = [], textAttributes = []}
 instance Default ButtonConfig where
   def = ButtonConfig [] []
 
@@ -77,7 +83,7 @@ contact_ (ContactConfig contactAttributes chipAttributes textAttributes deletabl
         Lucid.a_ (Lucid.class_ " mdl-chip__action " : actionAttributes) icon
       Nothing -> pure ()
 
-data (ContactConfig m) =
+data ContactConfig m =
   ContactConfig
     { contactAttributes :: [Lucid.Attribute]
     , chipAttributes    :: [Lucid.Attribute]
@@ -88,17 +94,23 @@ data (ContactConfig m) =
 
 deriving instance Show (ContactConfig Identity)
 
+-- |
+-- >>> def :: ContactConfig Identity
+-- ContactConfig {contactAttributes = [], chipAttributes = [], textAttributes = [], deletable = Nothing}
 instance Default (ContactConfig m) where
   def = ContactConfig [] [] [] Nothing
 
 data DeletableConfig m =
   DeletableConfig
     { actionAttributes :: [Lucid.Attribute]
-    , icon :: Lucid.HtmlT m ()
+    , icon             :: Lucid.HtmlT m ()
     }
   deriving Generic
 
 deriving instance Show (DeletableConfig Identity)
 
+-- |
+-- >>> def :: DeletableConfig Identity
+-- DeletableConfig {actionAttributes = [], icon = <i class=" material-icons ">cancel</i>}
 instance Monad m => Default (DeletableConfig m) where
   def = DeletableConfig [] (Icon.icon_ "cancel")

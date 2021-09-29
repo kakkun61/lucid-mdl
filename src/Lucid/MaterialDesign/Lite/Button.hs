@@ -8,7 +8,7 @@ module Lucid.MaterialDesign.Lite.Button
   , Color (..)
   ) where
 
-import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple (Ripple))
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass), Ripple)
 
 import           Data.Default.Class (Default (def))
 import           Data.Maybe         (fromMaybe)
@@ -30,7 +30,11 @@ instance HtmlClass Color where
   toHtmlClass Primary = " mdl-button--primary "
   toHtmlClass Accent  = " mdl-button--accent "
 
-button_ :: Applicative m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
+button_
+  :: Applicative m
+  => Config
+  -> Lucid.HtmlT m () -- ^ Label.
+  -> Lucid.HtmlT m ()
 button_ (Config style color ripple attributes) label =
   let
     classes =
@@ -48,5 +52,8 @@ data Config =
     }
   deriving (Show, Eq, Generic)
 
+-- |
+-- >>> def :: Config
+-- Config {style = Nothing, color = Nothing, ripple = Ripple False, attributes = []}
 instance Default Config where
-  def = Config Nothing Nothing (Ripple False) []
+  def = Config Nothing Nothing def []
