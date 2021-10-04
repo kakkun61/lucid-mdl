@@ -30,6 +30,7 @@ library
                    Lucid.MaterialDesign.Lite.Button
                    Lucid.MaterialDesign.Lite.Card
                    Lucid.MaterialDesign.Lite.Chip
+                   Lucid.MaterialDesign.Lite.Dialog
                    Lucid.MaterialDesign.Lite.Head
                    Lucid.MaterialDesign.Lite.Slider
                    Lucid.MaterialDesign.Lite.TextField

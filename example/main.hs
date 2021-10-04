@@ -15,6 +15,7 @@ import           Data.Default.Class (Default (def))
 import           Data.String        (IsString)
 import qualified Data.Text.Lazy.IO  as T
 import qualified Lucid              as L
+import qualified Lucid.MaterialDesign.Lite.Dialog as Dialog
 
 main :: IO ()
 main = T.putStrLn $ L.renderText html
@@ -89,6 +90,27 @@ html =
           Card.supportingText_ def loremIpsum
           Card.actions_ def { Card.border = Card.Border True } $ Button.button_ def { Button.color = Just Button.Colored } "Button"
           Card.menu_ def $ Button.button_ def { Button.style = Just Button.Icon } $ Icon.icon_ "share"
+
+      L.h3_ "Dialog"
+      L.div_ $ do
+        Button.button_ def { Button.attributes = [L.id_ "button-open-dialog"] } "Open dialog"
+        Dialog.dialog_ def { Dialog.attributes = [L.id_ "dialog"] } $ do
+          Dialog.title_ $ L.h4_ "Dialog"
+          Dialog.content_ def $ L.p_ loremIpsum
+          Dialog.actions_ def $ do
+            Button.button_ def { Button.attributes = [L.id_ "button-close-dialog"] } "Close dialog"
+        L.script_
+          "var dialog = document.getElementById('dialog');\
+          \var showDialogButton = document.getElementById('button-open-dialog');\
+          \if (! dialog.showModal) {\
+          \  dialogPolyfill.registerDialog(dialog);\
+          \}\
+          \showDialogButton.addEventListener('click', function() {\
+          \  dialog.showModal();\
+          \});\
+          \document.getElementById('button-close-dialog').addEventListener('click', function() {\
+          \  dialog.close();\
+          \});"
 
 space :: L.Html ()
 space = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""

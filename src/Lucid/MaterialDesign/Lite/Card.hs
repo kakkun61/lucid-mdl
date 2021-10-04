@@ -23,7 +23,7 @@ import           Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
 
 -- | A root container.
 card_ :: Applicative m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
-card_ (Config attributes) = Lucid.div_ (Lucid.class_ " mdl-card " : attributes)
+card_ (Config attributes) = Lucid.div_ $ Lucid.class_ " mdl-card " : attributes
 
 -- | A title container, which must be a child of 'card_', which must have 'titleText_' as this child and which may have 'subtitleText_' as this child.
 title_ :: Monad m => InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
@@ -51,14 +51,13 @@ menu_ = inner " mdl-card__menu "
 
 inner :: Applicative m => Text -> InnerConfig -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 inner mdlClass_ (InnerConfig attributes border) =
-  Lucid.div_ (Lucid.classes_ [mdlClass_, toHtmlClass border] : attributes)
+  Lucid.div_ $ Lucid.classes_ [mdlClass_, toHtmlClass border] : attributes
 
 newtype Config =
   Config
     { attributes :: [Lucid.Attribute]
     }
   deriving (Show, Eq)
-
 
 -- |
 -- >>> def :: Config
@@ -77,7 +76,7 @@ data InnerConfig =
 -- >>> def :: InnerConfig
 -- InnerConfig {attributes = [], border = Border False}
 instance Default InnerConfig where
-  def = InnerConfig [] (Border False)
+  def = InnerConfig [] def
 
 newtype Border = Border Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
 
