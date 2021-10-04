@@ -87,3 +87,5 @@ data ErrorConfig m =
   deriving Generic
 
 deriving instance Show (ErrorConfig Identity)
+
+-- TODO: expandable

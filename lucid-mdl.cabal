@@ -32,6 +32,7 @@ library
                    Lucid.MaterialDesign.Lite.Chip
                    Lucid.MaterialDesign.Lite.Dialog
                    Lucid.MaterialDesign.Lite.Head
+                   Lucid.MaterialDesign.Lite.Layout
                    Lucid.MaterialDesign.Lite.Slider
                    Lucid.MaterialDesign.Lite.TextField
                    Lucid.MaterialDesign.Lite.Toggle

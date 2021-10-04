@@ -7,14 +7,12 @@ module Lucid.MaterialDesign.Lite.Base
   ( Ripple (..)
   , Color (..)
   , TextColor (..)
-  , spacer_
   , HtmlClass (..)
   ) where
 
 import           Data.Default.Class (Default (def))
 import           Data.Text          (Text)
 import           GHC.Generics       (Generic)
-import qualified Lucid
 
 newtype Ripple = Ripple Bool deriving (Show, Read, Eq, Ord, Enum, Generic)
 
@@ -524,10 +522,6 @@ newtype TextColor =
   TextColor Color
   deriving stock (Show, Read, Eq, Ord, Generic)
   deriving newtype Enum
-
--- | A block element.
-spacer_ :: Applicative m => Lucid.HtmlT m ()
-spacer_ = Lucid.div_ [Lucid.class_ "mdl-layout-spacer"] mempty
 
 instance HtmlClass TextColor where
   toHtmlClass (TextColor c) = " mdl-color-text--" <> colorToText c <> " "

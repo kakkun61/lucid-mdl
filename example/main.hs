@@ -16,6 +16,8 @@ import           Data.String        (IsString)
 import qualified Data.Text.Lazy.IO  as T
 import qualified Lucid              as L
 import qualified Lucid.MaterialDesign.Lite.Dialog as Dialog
+import qualified Lucid.MaterialDesign.Lite.Layout as Layout
+import Lucid.MaterialDesign.Lite.Layout (Transparent(Transparent))
 
 main :: IO ()
 main = T.putStrLn $ L.renderText html
@@ -27,8 +29,7 @@ html =
       Head.script_
       Head.css_ Head.Pink Head.Indigo
       Icon.head_
-      L.style_ "body { padding: 20px; box-sizing: border-box; }"
-    L.body_ $ do
+    L.body_ [L.style_ "padding: 20px; box-sizing: border-box;"] $ do
       L.h1_ "lucid-mdl"
 
       L.h3_ "Button"
@@ -111,6 +112,48 @@ html =
           \document.getElementById('button-close-dialog').addEventListener('click', function() {\
           \  dialog.close();\
           \});"
+
+      L.h3_ "Navigation"
+      L.div_ $ do
+        L.div_ [L.style_ "width: 100%; height: 300px; position: relative;"] $ do
+          Layout.layout_ def { Layout.attributes = [L.style_ "background: url('https://getmdl.io//assets/demos/transparent.jpg') center / cover;"] } $ do
+            let colorWhite = L.style_ "color: white;"
+            L.style_ ".mdl-layout__drawer-button { color: white; }"
+            Layout.header_ def { Layout.attributes = [colorWhite], Layout.transparent = Transparent True } $ do
+              Layout.headerRow_ def $ do
+                Layout.title_ def "Title"
+                Layout.spacer_
+                Layout.navigation_ def $ do
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
+            Layout.drawer_ def $ do
+              Layout.title_ def "Title"
+              Layout.navigation_ def $ do
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
+            Layout.content_ def ""
+
+        L.div_ ""
+
+        L.div_ [L.style_ "width: 100%; height: 300px; position: relative;"] $ do
+          Layout.layout_ def { Layout.fixedDrawer = Layout.FixedDrawer True, Layout.fixedHeader = Layout.FixedHeader True } $ do
+            Layout.header_ def $ do
+              Layout.headerRow_ def $ do
+                Layout.title_ def "Title"
+                Layout.spacer_
+                Layout.navigation_ def $ do
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
+                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
+            Layout.drawer_ def $ do
+              Layout.title_ def "Title"
+              Layout.navigation_ def $ do
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
+                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
+            Layout.content_ def ""
 
 space :: L.Html ()
 space = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""
