@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric              #-}
-{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DerivingVia                #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
@@ -7,20 +7,16 @@ module Lucid.MaterialDesign.Lite.Base
   ( Ripple (..)
   , Color (..)
   , TextColor (..)
+  , Active (..)
   , HtmlClass (..)
+  , Flag (..)
   ) where
 
-import           Data.Default.Class (Default (def))
-import           Data.Text          (Text)
-import           GHC.Generics       (Generic)
+import Data.Default.Class (Default (def))
+import Data.Text          (Text)
+import GHC.Generics       (Generic)
 
-newtype Ripple = Ripple Bool deriving (Show, Read, Eq, Ord, Enum, Generic)
-
--- |
--- >>> def :: Ripple
--- Ripple False
-instance Default Ripple where
-  def = Ripple False
+newtype Ripple = Ripple Bool deriving stock (Show, Read, Eq, Ord, Bounded, Generic) deriving newtype Enum deriving Default via Flag
 
 instance HtmlClass Ripple where
   toHtmlClass (Ripple True)  = " mdl-js-ripple-effect "
@@ -532,3 +528,14 @@ class HtmlClass a where
 instance HtmlClass a => HtmlClass (Maybe a) where
   toHtmlClass Nothing  = ""
   toHtmlClass (Just a) = toHtmlClass a
+
+newtype Active = Active Bool deriving stock (Show, Read, Eq, Ord, Bounded, Generic) deriving newtype Enum deriving Default via Flag
+
+instance HtmlClass Active where
+  toHtmlClass (Active True)  = " is-active "
+  toHtmlClass (Active False) = ""
+
+newtype Flag = Flag Bool deriving stock (Show, Read, Eq, Ord, Generic) deriving newtype Enum
+
+instance Default Flag where
+  def = Flag False

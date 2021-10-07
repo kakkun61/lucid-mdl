@@ -5,6 +5,7 @@ module Lucid.MaterialDesign.Lite.Slider
   ( slider_
   , Config (..)
   ) where
+
 import           Data.Default.Class (Default (def))
 import           GHC.Generics       (Generic)
 import qualified Lucid

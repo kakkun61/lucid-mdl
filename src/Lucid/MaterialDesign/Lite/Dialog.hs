@@ -1,6 +1,8 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DuplicateRecordFields      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings          #-}
 
 module Lucid.MaterialDesign.Lite.Dialog
   ( dialog_
@@ -12,11 +14,12 @@ module Lucid.MaterialDesign.Lite.Dialog
   , FullWidth (..)
   ) where
 
-import qualified Lucid
-import qualified Lucid.Base as Lucid
-import Data.Default.Class (Default (def))
-import GHC.Generics (Generic)
 import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
+
+import           Data.Default.Class (Default (def))
+import           GHC.Generics       (Generic)
+import qualified Lucid
+import qualified Lucid.Base         as Lucid
 
 dialog_ :: Functor m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
 dialog_ (Config attributes) body =
@@ -45,18 +48,18 @@ instance Default Config where
 data ActionsConfig =
   ActionsConfig
     { attributes :: [Lucid.Attribute]
-    , fullWidth :: FullWidth
+    , fullWidth  :: FullWidth
     }
   deriving (Show, Eq)
 
 instance Default ActionsConfig where
   def = ActionsConfig [] def
 
-newtype FullWidth = FullWidth Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
+newtype FullWidth = FullWidth Bool deriving stock (Show, Read, Eq, Ord, Bounded, Generic) deriving newtype Enum
 
 instance Default FullWidth where
   def = FullWidth False
 
 instance HtmlClass FullWidth where
-  toHtmlClass (FullWidth True) = " mdl-dialog__actions--full-width "
+  toHtmlClass (FullWidth True)  = " mdl-dialog__actions--full-width "
   toHtmlClass (FullWidth False) = ""

@@ -1,9 +1,11 @@
-{-# LANGUAGE DeriveGeneric         #-}
-{-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE NamedFieldPuns        #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE StandaloneDeriving    #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DuplicateRecordFields      #-}
+{-# LANGUAGE FlexibleInstances          #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NamedFieldPuns             #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 
 module Lucid.MaterialDesign.Lite.TextField
   ( textField_
@@ -13,13 +15,14 @@ module Lucid.MaterialDesign.Lite.TextField
   , ErrorConfig (..)
   ) where
 
-import           Data.Default.Class             (Default (def))
-import           Data.Functor.Identity          (Identity)
-import           Data.Maybe                     (maybeToList)
-import           Data.Text                      (Text)
-import           GHC.Generics                   (Generic)
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
+
+import           Data.Default.Class    (Default (def))
+import           Data.Functor.Identity (Identity)
+import           Data.Maybe            (maybeToList)
+import           Data.Text             (Text)
+import           GHC.Generics          (Generic)
 import qualified Lucid
-import           Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
 
 textField_
   :: Monad m
@@ -66,7 +69,7 @@ deriving instance Show (Config Identity)
 instance Default (Config m) where
   def = Config def [] [] [] Nothing
 
-newtype FloatingLabel = FloatingLabel Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
+newtype FloatingLabel = FloatingLabel Bool deriving stock (Show, Read, Eq, Ord, Bounded, Generic) deriving newtype Enum
 
 -- |
 -- >>> def :: FloatingLabel

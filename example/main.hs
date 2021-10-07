@@ -1,23 +1,24 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
-import qualified Lucid.MaterialDesign.Icon           as Icon
-import qualified Lucid.MaterialDesign.Lite.Base      as Base
-import qualified Lucid.MaterialDesign.Lite.Button    as Button
-import qualified Lucid.MaterialDesign.Lite.Card      as Card
-import qualified Lucid.MaterialDesign.Lite.Chip      as Chip
-import qualified Lucid.MaterialDesign.Lite.Head      as Head
-import qualified Lucid.MaterialDesign.Lite.Slider    as Slider
-import qualified Lucid.MaterialDesign.Lite.TextField as TextField
-import qualified Lucid.MaterialDesign.Lite.Toggle    as Toggle
+import qualified Lucid.MaterialDesign.Icon                   as Icon
+import qualified Lucid.MaterialDesign.Lite.Base              as Base
+import qualified Lucid.MaterialDesign.Lite.Button            as Button
+import qualified Lucid.MaterialDesign.Lite.Card              as Card
+import qualified Lucid.MaterialDesign.Lite.Chip              as Chip
+import qualified Lucid.MaterialDesign.Lite.Dialog            as Dialog
+import qualified Lucid.MaterialDesign.Lite.Head              as Head
+import qualified Lucid.MaterialDesign.Lite.Layout.Grid       as Grid
+import qualified Lucid.MaterialDesign.Lite.Layout.Navigation as Navigation
+import qualified Lucid.MaterialDesign.Lite.Layout.Tab        as Tab
+import qualified Lucid.MaterialDesign.Lite.Slider            as Slider
+import qualified Lucid.MaterialDesign.Lite.TextField         as TextField
+import qualified Lucid.MaterialDesign.Lite.Toggle            as Toggle
 
 import           Data.Default.Class (Default (def))
 import           Data.String        (IsString)
 import qualified Data.Text.Lazy.IO  as T
 import qualified Lucid              as L
-import qualified Lucid.MaterialDesign.Lite.Dialog as Dialog
-import qualified Lucid.MaterialDesign.Lite.Layout as Layout
-import Lucid.MaterialDesign.Lite.Layout (Transparent(Transparent))
 
 main :: IO ()
 main = T.putStrLn $ L.renderText html
@@ -35,7 +36,7 @@ html =
       L.h3_ "Button"
       L.div_ $ do
         Button.button_ def "Button"
-        space
+        horizontalSpace
         Button.button_ def { Button.style = Just Button.Raised, Button.color = Just Button.Colored, Button.ripple = Base.Ripple True } "Button"
 
       L.h3_ "Checkbox"
@@ -65,13 +66,13 @@ html =
       L.h3_ "Chip"
       L.div_ $ do
         Chip.chip_ def "Chip"
-        space
+        horizontalSpace
         Chip.chip_ def { Chip.deletable = Just def } "Deletable"
-        space
+        horizontalSpace
         Chip.button_ def "Button"
-        space
+        horizontalSpace
         Chip.textContact_ def { Chip.contactAttributes = [L.classes_ [Base.toHtmlClass Base.PrimaryColor, Base.toHtmlClass $ Base.TextColor Base.White]] } "A" "Contact"
-        space
+        horizontalSpace
         Chip.imageContact_ def "https://getmdl.io/templates/dashboard/images/user.jpg" "Contact"
 
       L.h3_ "Text field"
@@ -115,48 +116,110 @@ html =
 
       L.h3_ "Navigation"
       L.div_ $ do
-        L.div_ [L.style_ "width: 100%; height: 300px; position: relative;"] $ do
-          Layout.layout_ def { Layout.attributes = [L.style_ "background: url('https://getmdl.io//assets/demos/transparent.jpg') center / cover;"] } $ do
+        L.div_ [boxStyle] $ do
+          Navigation.layout_ def { Navigation.attributes = [L.style_ "background: url('https://getmdl.io//assets/demos/transparent.jpg') center / cover;"] } $ do
             let colorWhite = L.style_ "color: white;"
             L.style_ ".mdl-layout__drawer-button { color: white; }"
-            Layout.header_ def { Layout.attributes = [colorWhite], Layout.transparent = Transparent True } $ do
-              Layout.headerRow_ def $ do
-                Layout.title_ def "Title"
-                Layout.spacer_
-                Layout.navigation_ def $ do
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
-            Layout.drawer_ def $ do
-              Layout.title_ def "Title"
-              Layout.navigation_ def $ do
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
-            Layout.content_ def ""
+            Navigation.header_ def { Navigation.attributes = [colorWhite], Navigation.transparent = Navigation.HeaderTransparent True } $ do
+              Navigation.headerRow_ def $ do
+                Navigation.title_ def "Title"
+                Navigation.spacer_
+                Navigation.navigation_ def $ do
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 1"
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 3"
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 2"
+            Navigation.drawer_ def $ do
+              Navigation.title_ def "Title"
+              Navigation.navigation_ def $ do
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 1"
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 3"
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 2"
+            Navigation.content_ def ""
 
-        L.div_ ""
+        verticalSpace
 
-        L.div_ [L.style_ "width: 100%; height: 300px; position: relative;"] $ do
-          Layout.layout_ def { Layout.fixedDrawer = Layout.FixedDrawer True, Layout.fixedHeader = Layout.FixedHeader True } $ do
-            Layout.header_ def $ do
-              Layout.headerRow_ def $ do
-                Layout.title_ def "Title"
-                Layout.spacer_
-                Layout.navigation_ def $ do
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
-                  Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
-            Layout.drawer_ def $ do
-              Layout.title_ def "Title"
-              Layout.navigation_ def $ do
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 1"
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 3"
-                Layout.navigationLink_ def { Layout.attributes = [L.href_ ""] } "Link 2"
-            Layout.content_ def ""
+        L.div_ [boxStyle] $ do
+          Navigation.layout_ def { Navigation.fixedDrawer = Navigation.FixedDrawer True, Navigation.fixedHeader = Navigation.FixedHeader True } $ do
+            Navigation.header_ def $ do
+              Navigation.headerRow_ def $ do
+                Navigation.title_ def "Title"
+                Navigation.spacer_
+                Navigation.navigation_ def $ do
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 1"
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 3"
+                  Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 2"
+            Navigation.drawer_ def $ do
+              Navigation.title_ def "Title"
+              Navigation.navigation_ def $ do
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 1"
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 3"
+                Navigation.navigationLink_ def { Navigation.attributes = [L.href_ ""] } "Link 2"
+            Navigation.content_ def ""
 
-space :: L.Html ()
-space = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""
+        verticalSpace
+
+        L.div_ [boxStyle] $ do
+          Navigation.layout_ def $ do
+            Navigation.header_ def $ do
+              Navigation.headerRow_ def $ do
+                Navigation.title_ def "Title"
+              Navigation.tabBar_ def { Navigation.ripple = Base.Ripple True } $ do
+                Navigation.tab_ def { Navigation.attributes = [L.href_ "#layout-tab-1"], Navigation.active = Base.Active True } "Tab 1"
+                Navigation.tab_ def { Navigation.attributes = [L.href_ "#layout-tab-2"] } "Tab 2"
+            Navigation.content_ def $ do
+              Navigation.tabPanel_ def { Navigation.attributes = [L.id_ "layout-tab-1"], Navigation.active = Base.Active True } $ do
+                L.p_ "This is a content of the tab 1"
+              Navigation.tabPanel_ def { Navigation.attributes = [L.id_ "layout-tab-2"] } $ do
+                L.p_ "This is a content of the tab 2"
+
+      L.h3_ "Grid"
+      L.div_ $ do
+        L.style_
+          " .demo-grid .mdl-cell {\
+          \   box-sizing: border-box;\
+          \   background-color: #BDBDBD;\
+          \   height: 200px;\
+          \   padding-left: 8px;\
+          \   padding-top: 4px;\
+          \   color: white;\
+          \ }\
+          \ .demo-grid .mdl-grid:first-of-type .mdl-cell {\
+          \   height: 50px;\
+          \ }"
+        L.div_ [L.class_ "demo-grid"] $ do
+          Grid.grid_ def $ do
+            let config = def { Grid.column = Just 1 }
+            Grid.cell_ config "a"
+            Grid.cell_ config "b"
+            Grid.cell_ config "c"
+            Grid.cell_ config "d"
+          Grid.grid_ def $ do
+            Grid.cell_ def "a"
+            Grid.cell_ def "b"
+
+      L.h3_ "Tab"
+      L.div_ $ do
+        L.div_ [boxStyle] $ do
+          Tab.tabs_ def $ do
+            Tab.tabBar_ def $ do
+              Tab.tab_ def { Tab.attributes = [L.href_ "#tab-1"], Tab.active = Base.Active True } "Tab 1"
+              Tab.tab_ def { Tab.attributes = [L.href_ "#tab-2"] } "Tab 1"
+              Tab.tab_ def { Tab.attributes = [L.href_ "#tab-3"] } "Tab 1"
+            Tab.panel_ def { Tab.attributes = [L.id_ "tab-1"], Tab.active = Base.Active True } $
+              L.p_ "This is a content of the tab 1"
+            Tab.panel_ def { Tab.attributes = [L.id_ "tab-2"] } $
+              L.p_ "This is a content of the tab 2"
+            Tab.panel_ def { Tab.attributes = [L.id_ "tab-3"] } $
+              L.p_ "This is a content of the tab 3"
+
+horizontalSpace :: L.Html ()
+horizontalSpace = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""
+
+verticalSpace :: L.Html ()
+verticalSpace = L.div_ [L.style_ "height: 8px;"] ""
+
+boxStyle :: L.Attribute
+boxStyle = L.style_ "width: 100%; max-width: 900px; height: 300px; position: relative;"
 
 loremIpsum :: IsString a => a
 loremIpsum =

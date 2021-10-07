@@ -1,6 +1,8 @@
-{-# LANGUAGE DeriveGeneric         #-}
-{-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DuplicateRecordFields      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings          #-}
 
 module Lucid.MaterialDesign.Lite.Card
   ( card_
@@ -15,11 +17,12 @@ module Lucid.MaterialDesign.Lite.Card
   , Border (..)
   ) where
 
-import           Data.Default.Class             (Default (def))
-import           Data.Text                      (Text)
-import           GHC.Generics                   (Generic)
+import Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
+
+import           Data.Default.Class (Default (def))
+import           Data.Text          (Text)
+import           GHC.Generics       (Generic)
 import qualified Lucid
-import           Lucid.MaterialDesign.Lite.Base (HtmlClass (toHtmlClass))
 
 -- | A root container.
 card_ :: Applicative m => Config -> Lucid.HtmlT m () -> Lucid.HtmlT m ()
@@ -78,7 +81,7 @@ data InnerConfig =
 instance Default InnerConfig where
   def = InnerConfig [] def
 
-newtype Border = Border Bool deriving (Show, Read, Eq, Ord, Bounded, Generic)
+newtype Border = Border Bool deriving stock (Show, Read, Eq, Ord, Bounded, Generic) deriving newtype Enum
 
 -- |
 -- >>> def :: Border
