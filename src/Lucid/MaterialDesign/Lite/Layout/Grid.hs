@@ -130,7 +130,7 @@ instance HtmlClass Column where
   toHtmlClass (Column n) = " mdl-cell--" <> Text.pack (Prelude.show n) <> "-col "
 
 instance HtmlClass (Platform (Maybe Column)) where
-  toHtmlClass p = platformToHtmlClass (maybe "" $ \n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-col ") p
+  toHtmlClass = platformToHtmlClass $ maybe "" (\n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-col ")
 
 newtype Offset = Offset Word deriving stock (Eq, Ord, Bounded, Generic) deriving newtype (Prelude.Show, Read, Num)
 
@@ -138,7 +138,7 @@ instance HtmlClass Offset where
   toHtmlClass (Offset n) = " mdl-cell--" <> Text.pack (Prelude.show n) <> "-offset "
 
 instance HtmlClass (Platform (Maybe Offset)) where
-  toHtmlClass p = platformToHtmlClass (maybe "" $ \n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-offset ") p
+  toHtmlClass = platformToHtmlClass $ maybe "" (\n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-offset ")
 
 newtype Order = Order Word deriving stock (Eq, Ord, Bounded, Generic) deriving newtype (Prelude.Show, Read, Num)
 
@@ -146,7 +146,7 @@ instance HtmlClass Order where
   toHtmlClass (Order n) = " mdl-cell--" <> Text.pack (Prelude.show n) <> "-order "
 
 instance HtmlClass (Platform (Maybe Order)) where
-  toHtmlClass p = platformToHtmlClass (maybe "" $ \n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-order ") p
+  toHtmlClass = platformToHtmlClass $ maybe "" (\n -> " mdl-cell--" <> Text.pack (Prelude.show n) <> "-order ")
 
 newtype Show = Show Bool deriving stock (Prelude.Show, Read, Eq, Ord, Generic) deriving newtype Enum
 
