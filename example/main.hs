@@ -1,19 +1,22 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
-import qualified Lucid.MaterialDesign.Icon                   as Icon
-import qualified Lucid.MaterialDesign.Lite.Base              as Base
-import qualified Lucid.MaterialDesign.Lite.Button            as Button
-import qualified Lucid.MaterialDesign.Lite.Card              as Card
-import qualified Lucid.MaterialDesign.Lite.Chip              as Chip
-import qualified Lucid.MaterialDesign.Lite.Dialog            as Dialog
-import qualified Lucid.MaterialDesign.Lite.Head              as Head
-import qualified Lucid.MaterialDesign.Lite.Layout.Grid       as Grid
-import qualified Lucid.MaterialDesign.Lite.Layout.Navigation as Navigation
-import qualified Lucid.MaterialDesign.Lite.Layout.Tab        as Tab
-import qualified Lucid.MaterialDesign.Lite.Slider            as Slider
-import qualified Lucid.MaterialDesign.Lite.TextField         as TextField
-import qualified Lucid.MaterialDesign.Lite.Toggle            as Toggle
+import qualified Lucid.MaterialDesign.Icon                    as Icon
+import qualified Lucid.MaterialDesign.Lite.Base               as Base
+import qualified Lucid.MaterialDesign.Lite.Button             as Button
+import qualified Lucid.MaterialDesign.Lite.Card               as Card
+import qualified Lucid.MaterialDesign.Lite.Chip               as Chip
+import qualified Lucid.MaterialDesign.Lite.Dialog             as Dialog
+import qualified Lucid.MaterialDesign.Lite.Head               as Head
+import qualified Lucid.MaterialDesign.Lite.Layout.Footer      as Footer
+import qualified Lucid.MaterialDesign.Lite.Layout.Footer.Mega as MegaFooter
+import qualified Lucid.MaterialDesign.Lite.Layout.Footer.Mini as MiniFooter
+import qualified Lucid.MaterialDesign.Lite.Layout.Grid        as Grid
+import qualified Lucid.MaterialDesign.Lite.Layout.Navigation  as Navigation
+import qualified Lucid.MaterialDesign.Lite.Layout.Tab         as Tab
+import qualified Lucid.MaterialDesign.Lite.Slider             as Slider
+import qualified Lucid.MaterialDesign.Lite.TextField          as TextField
+import qualified Lucid.MaterialDesign.Lite.Toggle             as Toggle
 
 import           Data.Default.Class (Default (def))
 import           Data.String        (IsString)
@@ -211,6 +214,55 @@ html =
               L.p_ "This is a content of the tab 2"
             Tab.panel_ def { Tab.attributes = [L.id_ "tab-3"] } $
               L.p_ "This is a content of the tab 3"
+
+      L.h3_ "Mega footer"
+      L.div_ $ do
+        MegaFooter.footer_ def $ do
+          MegaFooter.topSection_ def $ do
+            MegaFooter.leftSection_ def $ do
+              MegaFooter.socialButton_ def ""
+              MegaFooter.socialButton_ def ""
+              MegaFooter.socialButton_ def ""
+            MegaFooter.rightSection_ def $ do
+              L.a_ [L.href_ ""] "Introduction"
+              L.a_ [L.href_ ""] "App Status Dashboard"
+              L.a_ [L.href_ ""] "Terms of Service"
+          MegaFooter.middleSection_ def $ do
+            MegaFooter.dropDownSection_ def $ do
+              MegaFooter.heading_ def "Learning and Support"
+              MegaFooter.linkList_ def $ do
+                L.li_ $ L.a_ [L.href_ ""] "Resource Center"
+                L.li_ $ L.a_ [L.href_ ""] "Help Center"
+                L.li_ $ L.a_ [L.href_ ""] "Community"
+                L.li_ $ L.a_ [L.href_ ""] "Learn with Google"
+                L.li_ $ L.a_ [L.href_ ""] "Small Business Community"
+                L.li_ $ L.a_ [L.href_ ""] "Think Insights"
+            MegaFooter.dropDownSection_ def $ do
+              MegaFooter.heading_ def "Just for Developers"
+              MegaFooter.linkList_ def $ do
+                L.li_ $ L.a_ [L.href_ ""] "Google Developers"
+                L.li_ $ L.a_ [L.href_ ""] "AdWords API"
+                L.li_ $ L.a_ [L.href_ ""] "AdWords Scripts"
+                L.li_ $ L.a_ [L.href_ ""] "AdWords Remarketing Tag"
+          MegaFooter.bottomSection_ def $ do
+            Footer.logo_ def "More Information"
+            MegaFooter.linkList_ def $ do
+              L.li_ $ L.a_ [L.href_ ""] "Help"
+              L.li_ $ L.a_ [L.href_ ""] "Privacy and Terms"
+
+      L.h3_ "Mini footer"
+      L.div_ $ do
+        MiniFooter.footer_ def $ do
+          MiniFooter.leftSection_ def $ do
+            Footer.logo_ def "More Information"
+            MiniFooter.linkList_ def $ do
+              L.li_ $ L.a_ [L.href_ ""] "Help"
+              L.li_ $ L.a_ [L.href_ ""] "Privacy and Terms"
+              L.li_ $ L.a_ [L.href_ ""] "User Agreement"
+          MiniFooter.rightSection_ def $ do
+            MiniFooter.socialButton_ def ""
+            MiniFooter.socialButton_ def ""
+            MiniFooter.socialButton_ def ""
 
 horizontalSpace :: L.Html ()
 horizontalSpace = L.span_ [L.style_ "display: inline-block; width: 8px;"] ""
